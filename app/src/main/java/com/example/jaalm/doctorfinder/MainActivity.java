@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -34,7 +35,7 @@ public final class MainActivity extends AppCompatActivity {
         final EditText npiInput = (EditText) findViewById(R.id.NPIinput);
         final EditText doctorType = (EditText) findViewById(R.id.doctorType);
         final EditText postalCode = (EditText) findViewById(R.id.postalCode);
-        final TextView newText = (TextView) findViewById(R.id.newText);
+        final TextView doctorDisplay = (TextView) findViewById(R.id.doctorDisplay);
         // Capture our button from layout
         Button button = (Button) findViewById(R.id.corky);
         //Register the onClick listener with the implementation above
@@ -43,6 +44,8 @@ public final class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 startAPICall(npiInput.getText().toString(), doctorType.getText().toString(),
                         postalCode.getText().toString());
+                doctorDisplay.setText(newText);
+                System.out.println(newText);
             }
         });
     }
@@ -54,7 +57,7 @@ public final class MainActivity extends AppCompatActivity {
         super.onPause();
     }
 
-    void startAPICall(final String number, final String taxonomy, final String postalCode) {
+    String startAPICall(final String number, final String taxonomy, final String postalCode) {
         //https://github.com/jaimea99/DoctorSearch/upload
         try {
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
@@ -66,6 +69,7 @@ public final class MainActivity extends AppCompatActivity {
                         @Override
                         public void onResponse(final JSONObject responding) {
                             apiCallDone(responding);
+                            System.out.println(responding.toString());
                         }
                     }, new Response.ErrorListener() {
                 @Override
@@ -75,9 +79,12 @@ public final class MainActivity extends AppCompatActivity {
             });
             jsonObjectRequest.setShouldCache(false);
             requestQueue.add(jsonObjectRequest);
+            //System.out.println(jsonObjectRequest.toString());
+            return jsonObjectRequest.toString();
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return "";
     }
 
     /**
@@ -85,9 +92,12 @@ public final class MainActivity extends AppCompatActivity {
      *
      * @param given response from API.
      */
+    String newText;
     void apiCallDone(final JSONObject given) {
         try {
+            newText = given.getJSONArray("results").get(0).toString();
             Log.d(TAG, given.toString(2));
+            //eSystem.out.println(given.toString());
         } catch (JSONException lost) {
         }
     }
