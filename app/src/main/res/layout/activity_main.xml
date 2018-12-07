@@ -47,19 +47,6 @@
         android:layout_height="wrap_content"
         android:text="Postal Code" />
 
-    <EditText
-        android:id="@+id/displayNum"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="number" />
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Number to Display" />
-
     <Button
         android:id="@+id/corky"
         android:layout_width="match_parent"
@@ -67,8 +54,8 @@
         android:text="Submit" />
 
     <TextView
-        android:id="@+id/dDisplay"
+        android:id="@+id/doctorDisplay"
         android:layout_width="match_parent"
-        android:layout_height="179dp"
+        android:layout_height="263dp"
         android:text="TextView" />
 </LinearLayout>

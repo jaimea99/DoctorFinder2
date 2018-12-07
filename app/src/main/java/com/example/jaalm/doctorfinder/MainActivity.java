@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -19,10 +20,8 @@ import org.json.JSONObject;
 public final class MainActivity extends AppCompatActivity {
     private static final String TAG = "Doctor Search:Main";
     private static RequestQueue requestQueue;
-
     /**
      * Run when the screen pops up.
-     *
      * @param stateSaved
      */
     @Override
@@ -31,16 +30,22 @@ public final class MainActivity extends AppCompatActivity {
         // Set up the queue for our API requests
         requestQueue = Volley.newRequestQueue(this);
         setContentView(R.layout.activity_main);
+        // Capture npi input.
+        final EditText npiInput = (EditText) findViewById(R.id.NPIinput);
+        final EditText doctorType = (EditText) findViewById(R.id.doctorType);
+        final EditText postalCode = (EditText) findViewById(R.id.postalCode);
+        final TextView newText = (TextView) findViewById(R.id.newText);
         // Capture our button from layout
         Button button = (Button) findViewById(R.id.corky);
         //Register the onClick listener with the implementation above
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                startAPICall(npiInput.getText().toString(), doctorType.getText().toString(),
+                        postalCode.getText().toString());
             }
         });
     }
-
     /**
      * Run when this activity no longer runs.
      */
@@ -49,16 +54,14 @@ public final class MainActivity extends AppCompatActivity {
         super.onPause();
     }
 
-    void startAPICall(final String number, final String taxonomy, final String postalCode,
-                      final String displayNumber) {
+    void startAPICall(final String number, final String taxonomy, final String postalCode) {
         //https://github.com/jaimea99/DoctorSearch/upload
         try {
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                     Request.Method.GET,
-                    1"https://npiregistry.cms.hhs.gov/api/?number=" + number
+                    "https://npiregistry.cms.hhs.gov/api/?number="
                     + "&taxonomy_description=" + taxonomy + "&postal_code="
-                    + postalCode + "&limit" + displayNumber);
-            null,
+                    + postalCode + "&limit=1",null,
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(final JSONObject responding) {
