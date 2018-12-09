@@ -69,7 +69,12 @@ public final class MainActivity extends AppCompatActivity {
                         @Override
                         public void onResponse(final JSONObject responding) {
                             apiCallDone(responding);
-                            System.out.println(responding.toString());
+                            /*try {
+                                newText = responding.getJSONArray("results").getJSONArray(0).toString();
+                            } catch (Exception e){
+                                System.out.println(e);
+                            }*/
+                                //System.out.println(responding.toString());
                         }
                     }, new Response.ErrorListener() {
                 @Override
@@ -92,10 +97,16 @@ public final class MainActivity extends AppCompatActivity {
      *
      * @param given response from API.
      */
+    //newtest goes in the text box
     String newText;
     void apiCallDone(final JSONObject given) {
         try {
-            newText = given.getJSONArray("results").get(0).toString();
+            newText = "City:" + given.getJSONArray("results").getJSONObject(0).getJSONArray("addresses").getJSONObject(0).getString("city") + "Name:";
+            //System.out.println(e);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        try {
             Log.d(TAG, given.toString(2));
             //eSystem.out.println(given.toString());
         } catch (JSONException lost) {
