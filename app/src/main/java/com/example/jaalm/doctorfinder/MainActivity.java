@@ -59,6 +59,7 @@ public final class MainActivity extends AppCompatActivity {
 
     String startAPICall(final String number, final String taxonomy, final String postalCode) {
         //https://github.com/jaimea99/DoctorSearch/upload
+        //this is the information being pulled
         try {
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                     Request.Method.GET,
