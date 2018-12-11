@@ -101,7 +101,10 @@ public final class MainActivity extends AppCompatActivity {
     String newText;
     void apiCallDone(final JSONObject given) {
         try {
-            newText = "City:" + given.getJSONArray("results").getJSONObject(0).getJSONArray("addresses").getJSONObject(0).getString("city") + "Name:";
+            newText = "City: " + given.getJSONArray("results").getJSONObject(0).getJSONArray("addresses").getJSONObject(0).getString("city")
+            + "\n Telephone: " + given.getJSONArray("results").getJSONObject(0).getJSONArray("addresses").getJSONObject(0).getString("telephone_number")
+            + "\n Address: " + given.getJSONArray("results").getJSONObject(0).getJSONArray("addresses").getJSONObject(0).getString("address_1")
+            + "\n Name: " + given.getJSONArray("results").getJSONObject(0).getJSONObject("basic").getString("name");
             //System.out.println(e);
         } catch (Exception e) {
             System.out.println(e);
